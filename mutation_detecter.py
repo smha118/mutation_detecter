@@ -14,7 +14,6 @@ def main(argv):
         opts, args = getopt.getopt(
             argv, "hi:m:", ["ifile=", "mutation="])
     except getopt.GetoptError:
-        print("haha")
         print(example_cmd)
         sys.exit(2)
     if len(argv) != 4:
