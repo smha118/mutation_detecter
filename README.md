@@ -2,10 +2,8 @@
 
 ## Description
 
-This python code was initially designed for study "Using a public database of Neisseria gonorrhoeae genomes
-to detect mutations associated with zoliflodacin resistance" by Adamson <em>et al.</em> 2021 (pending)
-
-The code simply parses BLAST result in xml format and translate the sequence to check if given mutation is actually present.
+This python code was initially designed for the study "Using a public database of Neisseria gonorrhoeae genomes to detect mutations associated with zoliflodacin resistance" by Adamson et al. 2021 (pending)
+The code simply parses BLAST result in XML format and translates the sequence to check if the given mutation is present.
 
 ## Dependencies:
 
