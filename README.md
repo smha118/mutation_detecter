@@ -1,4 +1,4 @@
-# Mutation Detecter
+# Mutation Detector
 
 ## Description
 
