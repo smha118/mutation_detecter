@@ -29,28 +29,33 @@ def writeproteinfasta(blastXml):
         else:
             longest_dna = dnas[-1]
             frame1 = str(longest_dna[0:].translate())
-            if frame1.count("*") == 1 and frame1.startswith("M"):
+#             if frame1.count("*") == 1 and frame1.startswith("M"):
+            if frame1.startswith("M") and frame1.count("*") < 2:
                 protein_fasta.write(
                     ">"+acc+"|"+str(hsp.sbjct_start)+"|" + "\n")
                 protein_fasta.write(frame1+"\n")
-            elif frame1.count("*") > 1 and frame1.startswith("M"):
-                print("Deleterious mutation found! Abort!")
-                print(frame1)
-                sys.exit(2)
-            else:
-                print("Only partial genes found")
-                print(frame1)
-                sys.exit(2)
+#             elif frame1.count("*") > 1 and frame1.startswith("M"):
+#                 print(acc)
+#                 print("Deleterious mutation found! Abort!")
+#                 print(frame1)
+                
+#             else:
+#                 print(acc)
+#                 print("Only partial genes found")
+#                 print(frame1)
+                
 
     fname.close()
     return fout
 
 
-def addMutationDictionary(path, protein_sequence, position, mutations):
+def addMutationDictionary(path, protein_sequence, position, mutations,ref_aa):
     position = position-1
     acc = os.path.basename(path).replace(".fasta", "")
     if(len(protein_sequence) >= position):
         mutations[acc] = protein_sequence[position]
+        if(protein_sequence[position]!=ref_aa):
+            print(mutations)
     else:
         if "partial" not in mutations.keys():
             mutations["partial"] = list()
@@ -66,18 +71,10 @@ def getMutation(input_fasta_path, mutation):
     aa_position = int(mutation[1:len(mutation)-1])
     ref_aa = mutation[0]
     exp_aa = mutation[-1]
-
     with open(path) as lines:
         i = i+1
         for line in lines:
             if ">" not in line:
-                # if(gene == 'gyrA'):
-                if(len(line) < 930 and len(line) > 850):
-                    mutations = addMutationDictionary(
-                        path, line, aa_position, mutations)
-                    print(mutations)
-                else:
-                    if "partial" not in mutations.keys():
-                        mutations["partial"] = list()
-                    mutations["partial"].append(
-                        os.path.basename(path).replace(".fasta", ""))
+                mutations = addMutationDictionary(
+                   path, line, aa_position, mutations,ref_aa)
+                #print(mutations)

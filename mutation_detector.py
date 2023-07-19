@@ -1,4 +1,4 @@
-#!/usr/bin/python
+#!/Users/smha118/miniconda3/bin/python
 
 import sys
 import getopt
